@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style type="text/css">
+rect {
+  fill: none;
+  pointer-events: all;
+}
+
+body {
+	background-color: #F7DC6F;
+	overflow-y: hidden;
+}
+
+.gnode {
+  fill: red;
+}
+
+.cursor {
+  fill: none;
+  stroke: brown;
+  pointer-events: none;
+}
+
+.link {
+  stroke: black;
+}
+
+svg {
+	margin-left: 150px;
+	margin-bottom: 50px;
+}
+
+.head {
+	margin-left: 500px;
+}
+
+h1 {
+
+	background-color: #F39C12;
+	width: 900px;
+	height: 80px;
+	text-align: center;
+	border-radius: 15px;
+
+}
+
+.area {
+	display: inline-block;
+}
+
+#nodess {
+	margin-top: 70px;
+}
+
+.buttons {
+	display: inline-block;
+	margin-left: 50px;
+	padding-left: 20px;
+}
+
+button {
+	font-size: 18px;
+	background-color: #F9E79F;
+	border-radius: 50px;
+}
+
+img {
+	margin-right: 500px;
+	width: 150px;
+}
+
+</style>
+<body>
+
+
+<div class="head">		
+	
+	nodes : <input type="number" id="nodess" placeholder="Enter Number of Nodes">
+
+	<div class="area">
+		EDGE : <textarea id="conn" rows="10" cols="20" placeholder="Enter the edges"></textarea>
+	</div>
+	
+	<div class="buttons">
+		<button id="built">Built Graph</button>
+		<button id="reset">Reset</button>
+		<button id="dfs">DFS</button>
+	</div>
+
+ 	<h1 id="seq">Build Connected-Graph For Sequence</h1>
+</div>
+
+
+
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="main.js"></script>
+
+</body>
