@@ -121,6 +121,46 @@ d3.select("#dfs").on("click", function() {
   visited = [0];
 });
 
+d3.select("#bfs").on("click", function() {
+  var seq = "";
+  var element = document.getElementById("seq");
+  element.innerHTML = "";
+  queue.forEach(function(y) {
+      visited.push(0);
+  });
+
+  console.log(Graph);
+
+  bfslist.push(1);
+  queue.push(1);
+  visited[1] = 1;
+
+  while(queue.length > 0)  {
+    var front = queue.shift();
+    Graph[front].forEach(function(x) {
+          if(!visited[x])  {
+            bfslist.push(x);
+            queue.push(x);
+            visited[x] = 1;
+        }
+    });
+  }
+
+  console.log(bfslist);
+
+  for(var j=0;j<bfslist.length;j++) {
+    var y = bfslist[j];
+    if(j==bfslist.length-1) {
+      seq = seq + y.toString();
+    }
+    else {
+      seq = seq + y.toString() + "---->";
+    }
+  }
+  element.innerHTML = seq;
+  bfslist.length = 0;
+  visited = [0];
+});
 
 d3.select("#built").on("click", function() {
     console.log(nodes.length);
