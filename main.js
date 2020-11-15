@@ -1,9 +1,7 @@
 var width = 960,
     height = 500;
 
-
 var fill = d3.scale.category20();
-
 
 var force = d3.layout.force()
     .size([width, height])
@@ -12,10 +10,15 @@ var force = d3.layout.force()
     .charge(-900)
     .on("tick", tick);
 
-
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
+
+$("body")
+  .append("<h1>Sequence</h1>")
+
+$("h1")
+  .attr("id","seq")
 
 var index = 1;
 var nodeslist = [1];
@@ -23,6 +26,8 @@ var dict = {};
 var srcdict = {};
 var destdict = {};
 var Graph = {};
+var DFS = {};
+var comp_list = [];
 var queue = [];
 var visited = [0];
 var bfslist = [];
@@ -44,7 +49,6 @@ function addNode() {
 
   index = index + 1;
   nodeslist.push(index);
-
 
   var btn = document.createElement("BUTTON");
 
@@ -71,8 +75,6 @@ function addEdge(s, d) {
         Graph[alphaSrc].add(alphaDest);
         Graph[alphaDest].add(alphaSrc);
 
-        console.log(Graph);
-
         links.push({source: source, target: target});
 
         restart();
@@ -92,6 +94,16 @@ function dekh(u) {
             dekh(x);
           }
       });
+}
+
+function dfs_recur(comp, u) {
+  visited[u] = 1;
+  DFS[comp].push(u);
+  Graph[u].forEach(function(x) {
+          if(!visited[x])  {
+            dfs_recur(comp,x);
+          }
+    });
 }
 
 d3.select("#dfs").on("click", function() {
@@ -118,6 +130,42 @@ d3.select("#dfs").on("click", function() {
   }
   element.innerHTML = seq;
   dfslist.length = 0;
+  visited = [0];
+});
+
+d3.select("#connected").on("click", function() {
+  var compo = 0;
+  var seq = "";
+  var element = document.getElementById("seq");
+  element.innerHTML = "";
+  nodeslist.forEach(function() {
+      visited.push(0);
+  });
+  nodeslist.forEach(function(y) {
+      if(!visited[y]) {
+        compo = compo + 1;
+        comp_list.push(compo);
+        DFS[compo] = [];
+        dfs_recur(compo, y);
+      }
+  });
+  console.log(DFS);
+  comp_list.forEach(function(x) {
+    console.log("component : ", x,"\n");
+    seq = seq + x.toString() + ": ";
+    for(var j=0; j<DFS[x].length; j++) {
+        var y = DFS[x][j];
+        if(j==DFS[x].length-1) {
+          seq = seq + y.toString() + "<br>";
+        }
+        else {
+          seq = seq + y.toString() + "---->";
+        }
+    }
+  });
+  element.innerHTML = seq;
+  DFS.length = 0;
+  comp_list.length = 0;
   visited = [0];
 });
 
